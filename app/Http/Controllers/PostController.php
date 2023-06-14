@@ -9,12 +9,9 @@ class PostController extends Controller
 {
     public function index()
     {
-        $posts= Post::where('is_published', 1)->get();
-        foreach($posts as $post){
-            dump($post->title);
-        }
 
-        dd('end');
+
+        return view('posts');
     }
 
     public function create()
@@ -62,5 +59,52 @@ class PostController extends Controller
         $post->restore();
         dd('deleted');
 
+    }
+
+    public function firstOrCreate()
+    {
+
+        $anotherPost=[
+            'title'=>'some post',
+            'content'=>'some content',
+            'image'=>' some image4.jpg',
+            'likes'=>560,
+            'is_published'=>1,
+        ];
+
+        $post= Post::firstOrCreate([
+            'title'=>'some post',
+        ], [
+            'title'=>'some post',
+            'content'=>'some content',
+            'image'=>'some image4.jpg',
+            'likes'=>560,
+            'is_published'=>1,
+        ]);
+        dump($post->content);
+        dd('finished');
+    }
+
+    public function updateOrCreate()
+    {
+        $anotherPost=[
+            'title'=>'some post',
+            'content'=>'some content',
+            'image'=>' some image4.jpg',
+            'likes'=>560,
+            'is_published'=>1,
+        ];
+
+        $post=Post::updateOrCreate([
+            'title'=>'some post',
+            ], [
+            'title'=>'some post',
+            'content'=>'some content',
+            'image'=>' some image4.jpg',
+            'likes'=>560,
+            'is_published'=>1,
+        ]);
+        dump($post->content);
+        dd('finished');
     }
 }
