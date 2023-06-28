@@ -9,48 +9,46 @@ class PostController extends Controller
 {
     public function index()
     {
-
-
-        return view('posts');
+        $posts=Post::all();
+        return view('post.index', compact('posts'));
     }
 
     public function create()
     {
-        $postsArr=[
-            [
-                'title'=>'title of some phpstorm post',
-                'content'=>'some interesting content',
-                'image'=>'image4.jpg',
-                'likes'=>20,
-                'is_published'=>1,
-            ],
-            [
-                'title'=>'another title of some phpstorm post',
-                'content'=>'some another interesting content',
-                'image'=>'image5.jpg',
-                'likes'=>30,
-                'is_published'=>1,
-            ]
-        ];
-        foreach ($postsArr as $item){
-
-        Post::create($item);
+        return view('post.create');
     }
 
-
-        dd('created');
-    }
-
-    public function update()
+    public function store()
     {
-        $post= Post::find(5);
-        $post->update([
-            'title'=>'11111111111',
-            'content'=>'2222222222',
-
+        $data=request()->validate([
+                'title'=>'string',
+                'content'=>'string',
+                'image'=>'string',
         ]);
-        dd('updated');
+       Post::create($data);
+       return redirect()->route('post.index');
+    }
 
+    public function show(Post $post)
+    {
+        return view('post.show', compact('post'));
+    }
+
+    public function edit(Post $post)
+    {
+        return view('post.edit',compact('post') );
+
+    }
+
+    public function update(Post $post)
+    {
+        $data=request()->validate([
+            'title'=>'string',
+            'content'=>'string',
+            'image'=>'string',
+        ]);
+        $post->update($data);
+        return redirect()->route('post.show', $post->id);
     }
 
     public function delete()
