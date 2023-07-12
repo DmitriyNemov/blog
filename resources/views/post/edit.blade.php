@@ -16,6 +16,19 @@
             <label for="image" class="form-label">Image</label>
             <input name="image" type="text" class="form-control" id="image" placeholder="Image" value="{{$post->image}}">
         </div>
+        <div class="form-floating">
+        <select class="form-select" id="floatingSelect" aria-label="Floating label select example" name="category_id">
+         @foreach($categories as $category)
+        <option 
+
+         {{$category->id===$post->category->id ? 'selected ':''}}
+
+          value="{{$category->id}}">{{$category->title}}</option>
+          
+         @endforeach
+        </select>
+  <label for="category">Category</label>
+</div>
         <button type="submit" class="btn btn-primary">Update</button>
     </form>
 </div>

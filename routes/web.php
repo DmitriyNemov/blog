@@ -23,6 +23,8 @@ Route::get('/posts/{post}/edit',[PostController::class, 'edit'])->name('post.edi
 
 Route::patch('/posts/{post}',[PostController::class, 'update'])->name('post.update');
 
+Route::delete('/posts/{post}',[PostController::class, 'destroy'])->name('post.delete');
+
 
 Route::get('/posts/delete',[PostController::class, 'delete']);
 Route::get('/posts/first_or_create',[PostController::class, 'firstOrCreate']);
@@ -32,6 +34,5 @@ Route::get('/', function () {
     return 'aaaaaaaaaa';
 });
 
-Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
